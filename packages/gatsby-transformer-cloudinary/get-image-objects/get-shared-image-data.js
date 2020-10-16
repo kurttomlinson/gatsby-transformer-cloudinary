@@ -18,7 +18,7 @@ exports.getImageURL = ({
     : [];
   const initialTransformations = transformations
     .concat(defaultTransformations)
-    .join(",");
+    .join(',');
   const allTransformations = [initialTransformations].concat(chained).join('/');
 
   const imagePath = [
@@ -81,7 +81,7 @@ exports.getBase64 = async ({
   return base64;
 };
 
-const fetchBase64 = async url => {
+async function fetchBase64(url) {
   if (!base64Cache[url]) {
     const result = await axios.get(url, { responseType: 'arraybuffer' });
     const data = Buffer.from(result.data).toString('base64');
@@ -89,4 +89,4 @@ const fetchBase64 = async url => {
   }
 
   return base64Cache[url];
-};
+}
