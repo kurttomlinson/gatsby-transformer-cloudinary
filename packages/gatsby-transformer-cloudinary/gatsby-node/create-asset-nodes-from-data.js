@@ -1,3 +1,4 @@
+const flatMap = require('lodash/flatMap');
 const get = require('lodash/get');
 const set = require('lodash/set');
 const unset = require('lodash/unset');
@@ -67,11 +68,9 @@ function getAssetDataPaths({ node, basePath = '' }) {
       return basePath === '' ? subPath : `${basePath}.${subPath}`;
     });
 
-  const indirectAssetDataPaths = objectPaths
-    .map(objectPath => {
-      return getAssetDataPaths({ node, basePath: objectPath });
-    })
-    .flat();
+  const indirectAssetDataPaths = flatMap(objectPaths, objectPath => {
+    return getAssetDataPaths({ node, basePath: objectPath });
+  });
 
   const assetDataPaths = [...directAssetDataPaths, ...indirectAssetDataPaths];
   return assetDataPaths;
