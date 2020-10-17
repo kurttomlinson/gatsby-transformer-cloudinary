@@ -1,3 +1,9 @@
+# Version 2.1.1
+
+Fixes:
+
+- Deeply nested asset data is now transformed into CloudinaryAsset nodes.
+
 # Version 2.1.0
 
 Additions:
