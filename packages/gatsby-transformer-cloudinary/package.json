@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-cloudinary",
-  "version": "2.1.1-a",
+  "version": "2.1.1-b",
   "description": "Transform local files into Cloudinary-managed assets for Gatsby sites.",
   "main": "index.js",
   "types": "index.d.ts",
