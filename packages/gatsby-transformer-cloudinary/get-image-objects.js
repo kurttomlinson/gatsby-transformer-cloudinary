@@ -17,6 +17,7 @@ exports.getFixedImageObject = async ({
   cloudName,
   defaultBase64,
   defaultTracedSVG,
+  fieldsToSelect,
   height,
   ignoreDefaultBase64 = false,
   originalHeight,
@@ -27,19 +28,6 @@ exports.getFixedImageObject = async ({
   version = false,
   width,
 }) => {
-  const base64 = await getBase64({
-    base64Transformations,
-    base64Width,
-    chained,
-    cloudName,
-    defaultBase64,
-    ignoreDefaultBase64,
-    public_id,
-    reporter,
-    transformations,
-    version,
-  });
-
   const src = getImageURL({
     public_id,
     version,
@@ -97,14 +85,30 @@ exports.getFixedImageObject = async ({
     })
     .join();
 
-  return {
-    base64,
+  const fixedImageObject = {
     height: Math.round(displayHeight),
     src,
     srcSet,
     tracedSVG: defaultTracedSVG,
     width: Math.round(displayWidth),
   };
+
+  if (fieldsToSelect.includes('base64')) {
+    fixedImageObject.base64 = await getBase64({
+      base64Transformations,
+      base64Width,
+      chained,
+      cloudName,
+      defaultBase64,
+      ignoreDefaultBase64,
+      public_id,
+      reporter,
+      transformations,
+      version,
+    });
+  }
+
+  return fixedImageObject;
 };
 
 exports.getFluidImageObject = async ({
@@ -115,6 +119,7 @@ exports.getFluidImageObject = async ({
   cloudName,
   defaultBase64,
   defaultTracedSVG,
+  fieldsToSelect,
   ignoreDefaultBase64 = false,
   maxWidth,
   originalHeight,
@@ -131,18 +136,6 @@ exports.getFluidImageObject = async ({
   const { fluidMaxWidth } = getPluginOptions();
   const max = Math.min(maxWidth ? maxWidth : fluidMaxWidth, originalWidth);
   const sizes = `(max-width: ${max}px) 100vw, ${max}px`;
-  const base64 = await getBase64({
-    base64Transformations,
-    base64Width,
-    chained,
-    cloudName,
-    defaultBase64,
-    ignoreDefaultBase64,
-    public_id,
-    reporter,
-    transformations,
-    version,
-  });
   const src = getImageURL({
     public_id,
     version,
@@ -178,9 +171,8 @@ exports.getFluidImageObject = async ({
     (presentationWidth * originalHeight) / originalWidth,
   );
 
-  return {
+  const fluidImageObject = {
     aspectRatio,
-    base64,
     presentationWidth,
     presentationHeight,
     sizes,
@@ -188,6 +180,23 @@ exports.getFluidImageObject = async ({
     srcSet,
     tracedSVG: defaultTracedSVG,
   };
+
+  if (fieldsToSelect.includes('base64')) {
+    fluidImageObject.base64 = await getBase64({
+      base64Transformations,
+      base64Width,
+      chained,
+      cloudName,
+      defaultBase64,
+      ignoreDefaultBase64,
+      public_id,
+      reporter,
+      transformations,
+      version,
+    });
+  }
+
+  return fluidImageObject;
 };
 
 function onlyUnique(element, index, array) {

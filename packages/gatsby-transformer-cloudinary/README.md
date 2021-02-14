@@ -174,6 +174,8 @@ When providing `defaultBase64` properties, it's recommended that you set the plu
 
 The property `defaultTracedSVG` in the node above can be used by your CMS/backend to provide precomputed or cached SVG placeholders for your images. The provided string must comply with [RFC 2397](https://tools.ietf.org/html/rfc2397). It should also be encoded with something like JavaScript's `encodeURIComponent()`.
 
+No API calls to Cloudinary for base64 images will be made if your GraphQL queries do not request base64 images.
+
 ### Plugin options
 
 In `gatsby-config.js` the plugin accepts the following options:

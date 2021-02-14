@@ -98,14 +98,20 @@ exports.createResolvers = ({ createResolvers, reporter }) => {
             transformations,
             chained,
           },
-        ) =>
-          getFixedImageObject({
+          _context,
+          info,
+        ) => {
+          const fieldsToSelect = info.fieldNodes[0].selectionSet.selections.map(
+            item => item.name.value,
+          );
+          return getFixedImageObject({
             base64Transformations,
             base64Width,
             chained,
             cloudName,
             defaultBase64,
             defaultTracedSVG,
+            fieldsToSelect,
             height,
             ignoreDefaultBase64,
             originalHeight,
@@ -115,7 +121,8 @@ exports.createResolvers = ({ createResolvers, reporter }) => {
             transformations,
             version,
             width,
-          }),
+          });
+        },
       },
       fluid: {
         type: 'CloudinaryAssetFluid!',
@@ -138,8 +145,13 @@ exports.createResolvers = ({ createResolvers, reporter }) => {
             maxWidth,
             transformations,
           },
-        ) =>
-          getFluidImageObject({
+          _context,
+          info,
+        ) => {
+          const fieldsToSelect = info.fieldNodes[0].selectionSet.selections.map(
+            item => item.name.value,
+          );
+          return getFluidImageObject({
             base64Transformations,
             base64Width,
             breakpoints,
@@ -147,6 +159,7 @@ exports.createResolvers = ({ createResolvers, reporter }) => {
             cloudName,
             defaultBase64,
             defaultTracedSVG,
+            fieldsToSelect,
             ignoreDefaultBase64,
             maxWidth,
             originalHeight,
@@ -155,7 +168,8 @@ exports.createResolvers = ({ createResolvers, reporter }) => {
             reporter,
             transformations,
             version,
-          }),
+          });
+        },
       },
     },
   };
