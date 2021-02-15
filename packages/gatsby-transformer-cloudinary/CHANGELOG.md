@@ -1,14 +1,16 @@
 # Version Next
 
-Fixes:
-
-- base64 images are no longer generated unless a query requesting them is run.
-
-# Version 2.1.1
-
 Additions:
 
 - defaultTracedSVG values are now passed along as tracedSVG values.
+
+Improvements:
+
+- Improved base64 caching so that if a second request for the same base64 image is made before the first response is received, only one request is made.
+
+Fixes:
+
+- base64 images are no longer generated unless a query requesting them is run.
 
 # Version 2.1.1
 
